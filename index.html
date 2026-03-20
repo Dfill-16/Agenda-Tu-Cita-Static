@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agenda Tu Cita | Reservas para barberías</title>
+  <meta
+    name="description"
+    content="Landing page estática para Agenda Tu Cita, software de reservas y gestión para barberías."
+  />
+  <style>
+    :root{
+      --bg:#0b1020;
+      --bg-soft:#111831;
+      --card:#121a35;
+      --card-2:#0f1730;
+      --line:rgba(255,255,255,.08);
+      --text:#eef2ff;
+      --muted:#aab4d6;
+      --primary:#6d5efc;
+      --primary-2:#8d7fff;
+      --accent:#22c55e;
+      --warning:#f59e0b;
+      --danger:#ef4444;
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+      --radius:22px;
+      --radius-sm:16px;
+      --container:1200px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(109,94,252,.18), transparent 30%),
+        radial-gradient(circle at right, rgba(34,197,94,.12), transparent 25%),
+        linear-gradient(180deg,#090d1a 0%, #0b1020 100%);
+      color:var(--text);
+      line-height:1.5;
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+    .container{
+      width:min(calc(100% - 32px), var(--container));
+      margin-inline:auto;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:.55rem;
+      padding:.55rem .9rem;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      color:#dbe4ff;
+      font-size:.92rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--accent);
+      box-shadow:0 0 0 6px rgba(34,197,94,.14);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.6rem;
+      padding:14px 20px;
+      border-radius:14px;
+      font-weight:700;
+      border:1px solid transparent;
+      transition:.25s ease;
+      cursor:pointer;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--primary),var(--primary-2));
+      color:white;
+      box-shadow:0 14px 30px rgba(109,94,252,.35);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.05);
+    }
+
+    .btn-secondary{
+      border-color:rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+    }
+
+    .btn-secondary:hover{
+      background:rgba(255,255,255,.08);
+      transform:translateY(-2px);
+    }
+
+    .section{
+      padding:88px 0;
+      position:relative;
+    }
+
+    .section-title{
+      font-size:clamp(1.9rem, 3vw, 3rem);
+      line-height:1.08;
+      margin:0 0 14px;
+      letter-spacing:-.03em;
+    }
+
+    .section-text{
+      color:var(--muted);
+      max-width:700px;
+      margin:0;
+      font-size:1.02rem;
+    }
+
+    /* Header */
+    .header{
+      position:sticky;
+      top:0;
+      z-index:40;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      background:rgba(9,13,26,.72);
+      backdrop-filter:blur(16px);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      min-height:76px;
+      gap:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      letter-spacing:-.02em;
+    }
+
+    .brand-mark{
+      width:42px;height:42px;border-radius:14px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--primary),#4338ca);
+      box-shadow:0 10px 25px rgba(109,94,252,.35);
+      font-size:1.15rem;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:24px;
+      color:var(--muted);
+      font-weight:600;
+    }
+
+    .nav-links a:hover{color:white}
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    /* Hero */
+    .hero{
+      padding:72px 0 56px;
+      overflow:hidden;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:34px;
+      align-items:center;
+    }
+
+    .hero h1{
+      font-size:clamp(2.4rem, 5vw, 4.9rem);
+      line-height:.98;
+      margin:18px 0 18px;
+      letter-spacing:-.05em;
+      max-width:780px;
+    }
+
+    .hero p{
+      margin:0 0 28px;
+      color:var(--muted);
+      font-size:1.08rem;
+      max-width:660px;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-bottom:26px;
+    }
+
+    .hero-points{
+      display:flex;
+      flex-wrap:wrap;
+      gap:18px;
+      color:#d8e1ff;
+      font-size:.95rem;
+    }
+
+    .hero-points span{
+      display:inline-flex;
+      align-items:center;
+      gap:9px;
+    }
+
+    .hero-points span::before{
+      content:"";
+      width:10px;height:10px;border-radius:50%;
+      background:linear-gradient(135deg,var(--accent),#4ade80);
+      box-shadow:0 0 0 4px rgba(34,197,94,.12);
+    }
+
+    .hero-card{
+      position:relative;
+      background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      overflow:hidden;
+    }
+
+    .hero-card::after{
+      content:"";
+      position:absolute;
+      inset:auto -40px -40px auto;
+      width:180px;height:180px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(109,94,252,.28), transparent 68%);
+      pointer-events:none;
+    }
+
+    .dashboard-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px;
+    }
+
+    .dashboard-title{
+      font-weight:700;
+      font-size:1.02rem;
+    }
+
+    .dashboard-pill{
+      background:rgba(34,197,94,.12);
+      color:#97f0b5;
+      border:1px solid rgba(34,197,94,.2);
+      padding:.45rem .75rem;
+      border-radius:999px;
+      font-size:.82rem;
+      font-weight:700;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-bottom:16px;
+    }
+
+    .stat{
+      background:var(--card-2);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .stat small{
+      color:var(--muted);
+      display:block;
+      margin-bottom:8px;
+      font-size:.8rem;
+    }
+
+    .stat strong{
+      font-size:1.28rem;
+      display:block;
+    }
+
+    .calendar{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:14px;
+    }
+
+    .panel{
+      background:var(--card-2);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+    }
+
+    .panel h4{
+      margin:0 0 14px;
+      font-size:1rem;
+    }
+
+    .days, .times{
+      display:grid;
+      gap:10px;
+    }
+
+    .days{
+      grid-template-columns:repeat(4,1fr);
+    }
+
+    .day, .time{
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+      border-radius:14px;
+      text-align:center;
+    }
+
+    .day{
+      padding:10px 6px;
+    }
+
+    .day b{
+      display:block;
+      font-size:1rem;
+      margin-bottom:2px;
+    }
+
+    .day span{
+      color:var(--muted);
+      font-size:.77rem;
+    }
+
+    .day.active{
+      background:linear-gradient(135deg,rgba(109,94,252,.25),rgba(109,94,252,.14));
+      border-color:rgba(141,127,255,.45);
+    }
+
+    .times{
+      grid-template-columns:repeat(2,1fr);
+    }
+
+    .time{
+      padding:12px 10px;
+      font-weight:700;
+      color:#dfe5ff;
+    }
+
+    .time.active{
+      background:rgba(34,197,94,.14);
+      border-color:rgba(34,197,94,.35);
+      color:#baf7cf;
+    }
+
+    .booking-card{
+      margin-top:14px;
+      background:linear-gradient(180deg, rgba(109,94,252,.18), rgba(109,94,252,.08));
+      border:1px solid rgba(141,127,255,.28);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .booking-card .row{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      margin:8px 0;
+      color:#d7def9;
+    }
+
+    .booking-card .row span:last-child{
+      font-weight:700;
+      color:white;
+    }
+
+    /* Features */
+    .feature-grid{
+      margin-top:34px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .feature{
+      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .feature-icon{
+      width:52px;height:52px;border-radius:16px;
+      display:grid;place-items:center;
+      font-size:1.35rem;
+      margin-bottom:18px;
+      background:linear-gradient(135deg, rgba(109,94,252,.28), rgba(109,94,252,.1));
+      border:1px solid rgba(141,127,255,.24);
+    }
+
+    .feature h3{
+      margin:0 0 10px;
+      font-size:1.1rem;
+    }
+
+    .feature p{
+      margin:0;
+      color:var(--muted);
+      font-size:.98rem;
+    }
+
+    /* Showcase */
+    .showcase{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+      margin-top:34px;
+    }
+
+    .show-card{
+      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:24px;
+    }
+
+    .mini-window{
+      margin-top:18px;
+      background:#0b1126;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:20px;
+      padding:18px;
+    }
+
+    .window-top{
+      display:flex;
+      gap:8px;
+      margin-bottom:16px;
+    }
+
+    .window-top span{
+      width:10px;height:10px;border-radius:50%;
+      background:#334155;
+    }
+
+    .window-top span:nth-child(1){background:#ef4444}
+    .window-top span:nth-child(2){background:#f59e0b}
+    .window-top span:nth-child(3){background:#22c55e}
+
+    .list{
+      display:grid;
+      gap:10px;
+    }
+
+    .list-item{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      padding:14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .list-item small{
+      display:block;
+      color:var(--muted);
+      margin-top:3px;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:92px;
+      height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      font-size:.82rem;
+      font-weight:700;
+    }
+
+    .tag.ok{
+      background:rgba(34,197,94,.14);
+      color:#aaf0c1;
+      border:1px solid rgba(34,197,94,.22);
+    }
+
+    .tag.warn{
+      background:rgba(245,158,11,.12);
+      color:#f8cf7b;
+      border:1px solid rgba(245,158,11,.22);
+    }
+
+    .tag.info{
+      background:rgba(109,94,252,.16);
+      color:#cdc5ff;
+      border:1px solid rgba(109,94,252,.25);
+    }
+
+    /* Metrics */
+    .metrics{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-top:34px;
+    }
+
+    .metric{
+      padding:22px;
+      border-radius:22px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+      text-align:center;
+    }
+
+    .metric strong{
+      display:block;
+      font-size:2rem;
+      margin-bottom:6px;
+      letter-spacing:-.03em;
+    }
+
+    .metric span{
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    /* CTA */
+    .cta{
+      position:relative;
+      overflow:hidden;
+    }
+
+    .cta-card{
+      border-radius:32px;
+      padding:38px;
+      background:
+        radial-gradient(circle at top right, rgba(141,127,255,.18), transparent 28%),
+        linear-gradient(135deg, rgba(109,94,252,.22), rgba(17,24,49,.92));
+      border:1px solid rgba(141,127,255,.22);
+      box-shadow:var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .cta h2{
+      margin:0 0 12px;
+      font-size:clamp(1.9rem, 3vw, 3rem);
+      line-height:1.05;
+      letter-spacing:-.04em;
+    }
+
+    .cta p{
+      margin:0;
+      color:#d6ddff;
+      max-width:700px;
+    }
+
+    /* Footer */
+    .footer{
+      padding:28px 0 46px;
+      color:var(--muted);
+    }
+
+    .footer-line{
+      border-top:1px solid rgba(255,255,255,.08);
+      padding-top:24px;
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    /* Reveal animation */
+    .reveal{
+      opacity:0;
+      transform:translateY(24px);
+      transition:opacity .65s ease, transform .65s ease;
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 1080px){
+      .hero-grid,
+      .showcase,
+      .calendar,
+      .cta-card{
+        grid-template-columns:1fr;
+      }
+
+      .feature-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .metrics{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media (max-width: 760px){
+      .nav-links{
+        display:none;
+      }
+
+      .stats,
+      .feature-grid,
+      .metrics,
+      .days,
+      .times{
+        grid-template-columns:1fr;
+      }
+
+      .hero{
+        padding-top:42px;
+      }
+
+      .section{
+        padding:68px 0;
+      }
+
+      .cta-card{
+        padding:28px;
+      }
+
+      .hero h1{
+        font-size:2.6rem;
+      }
+
+      .header .btn-secondary{
+        display:none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a href="#" class="brand">
+        <div class="brand-mark">✂</div>
+        <div>
+          <div>Agenda Tu Cita</div>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#servicios">Servicios</a>
+        <a href="#gestion">Gestión</a>
+        <a href="#beneficios">Beneficios</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#gestion" class="btn btn-secondary">Ver demo</a>
+        <a href="#contacto" class="btn btn-primary">Solicitar acceso</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <div class="badge">
+            <span class="dot"></span>
+            Reservas online para barberías y salones
+          </div>
+
+          <h1>
+            Tu agenda digital para vender más, organizar mejor y atender sin estrés.
+          </h1>
+
+          <p>
+            Agenda Tu Cita centraliza reservas, horarios, clientes, recordatorios y control
+            operativo en una sola experiencia moderna. Diseñada para barberías que quieren
+            dejar atrás WhatsApp desordenado, llamadas perdidas y espacios vacíos.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#contacto" class="btn btn-primary">Empezar ahora</a>
+            <a href="#servicios" class="btn btn-secondary">Explorar funciones</a>
+          </div>
+
+          <div class="hero-points">
+            <span>Reservas 24/7</span>
+            <span>Recordatorios automáticos</span>
+            <span>Control de barberos y horarios</span>
+            <span>Historial de clientes</span>
+          </div>
+        </div>
+
+        <div class="hero-card reveal">
+          <div class="dashboard-top">
+            <div class="dashboard-title">Panel de agenda</div>
+            <div class="dashboard-pill">En línea</div>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <small>Citas hoy</small>
+              <strong>28</strong>
+            </div>
+            <div class="stat">
+              <small>Ocupación</small>
+              <strong>86%</strong>
+            </div>
+            <div class="stat">
+              <small>Clientes nuevos</small>
+              <strong>12</strong>
+            </div>
+          </div>
+
+          <div class="calendar">
+            <div class="panel">
+              <h4>Selecciona una fecha</h4>
+              <div class="days">
+                <div class="day"><b>12</b><span>Lun</span></div>
+                <div class="day"><b>13</b><span>Mar</span></div>
+                <div class="day active"><b>14</b><span>Mié</span></div>
+                <div class="day"><b>15</b><span>Jue</span></div>
+                <div class="day"><b>16</b><span>Vie</span></div>
+                <div class="day"><b>17</b><span>Sáb</span></div>
+                <div class="day"><b>18</b><span>Dom</span></div>
+                <div class="day"><b>19</b><span>Lun</span></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h4>Horarios disponibles</h4>
+              <div class="times">
+                <div class="time">09:00 AM</div>
+                <div class="time active">10:30 AM</div>
+                <div class="time">11:15 AM</div>
+                <div class="time">02:00 PM</div>
+                <div class="time">03:30 PM</div>
+                <div class="time">05:15 PM</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="booking-card">
+            <div class="row"><span>Servicio</span><span>Corte + barba</span></div>
+            <div class="row"><span>Barbero</span><span>Sebastián R.</span></div>
+            <div class="row"><span>Cliente</span><span>Carlos Gómez</span></div>
+            <div class="row"><span>Estado</span><span>Confirmada</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="servicios">
+      <div class="container">
+        <div class="reveal">
+          <h2 class="section-title">Funciones pensadas para el día a día</h2>
+          <p class="section-text">
+            La propuesta combina agenda online, visibilidad de disponibilidad real, gestión
+            centralizada y automatización del contacto con clientes para reducir carga operativa
+            y mejorar la experiencia de reserva.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature reveal">
+            <div class="feature-icon">📅</div>
+            <h3>Agenda inteligente</h3>
+            <p>
+              Visualiza citas por día, barbero y servicio. Evita cruces de horario y mantén la
+              disponibilidad siempre actualizada.
+            </p>
+          </article>
+
+          <article class="feature reveal">
+            <div class="feature-icon">💬</div>
+            <h3>Recordatorios automáticos</h3>
+            <p>
+              Reduce ausencias con confirmaciones y recordatorios por canales digitales antes de
+              cada cita.
+            </p>
+          </article>
+
+          <article class="feature reveal">
+            <div class="feature-icon">👤</div>
+            <h3>Historial del cliente</h3>
+            <p>
+              Consulta servicios previos, preferencias y frecuencia de visita para ofrecer una
+              atención más personalizada.
+            </p>
+          </article>
+
+          <article class="feature reveal">
+            <div class="feature-icon">🧑‍🔧</div>
+            <h3>Gestión de barberos</h3>
+            <p>
+              Organiza turnos, pausas, horarios especiales y carga de trabajo por cada miembro del
+              equipo.
+            </p>
+          </article>
+
+          <article class="feature reveal">
+            <div class="feature-icon">📈</div>
+            <h3>Indicadores del negocio</h3>
+            <p>
+              Monitorea ocupación, volumen de reservas, clientes nuevos y desempeño operativo desde
+              un panel visual.
+            </p>
+          </article>
+
+          <article class="feature reveal">
+            <div class="feature-icon">🌐</div>
+            <h3>Reservas 24/7</h3>
+            <p>
+              Tus clientes pueden reservar en cualquier momento sin depender de llamadas o mensajes
+              fuera de horario.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="gestion">
+      <div class="container">
+        <div class="reveal">
+          <h2 class="section-title">Gestión clara para administradores y barberos</h2>
+          <p class="section-text">
+            Un sistema de reservas para barbería suele aportar control del calendario, sincronización
+            de horarios, reservas online y seguimiento de la carga de trabajo en una sola vista.
+          </p>
+        </div>
+
+        <div class="showcase">
+          <article class="show-card reveal">
+            <h3>Vista de operación</h3>
+            <p class="section-text">
+              Administra el flujo diario, confirma reservas y detecta espacios vacíos antes de que
+              afecten la productividad.
+            </p>
+
+            <div class="mini-window">
+              <div class="window-top">
+                <span></span><span></span><span></span>
+              </div>
+
+              <div class="list">
+                <div class="list-item">
+                  <div>
+                    <strong>09:00 AM · Corte clásico</strong>
+                    <small>Juan Pérez · Barbero Andrés</small>
+                  </div>
+                  <div class="tag ok">Confirmada</div>
+                </div>
+
+                <div class="list-item">
+                  <div>
+                    <strong>10:30 AM · Corte + barba</strong>
+                    <small>Miguel Rojas · Barbero Sebastián</small>
+                  </div>
+                  <div class="tag info">En proceso</div>
+                </div>
+
+                <div class="list-item">
+                  <div>
+                    <strong>12:00 PM · Fade premium</strong>
+                    <small>David Torres · Barbero Kevin</small>
+                  </div>
+                  <div class="tag warn">Pendiente</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="show-card reveal">
+            <h3>Vista de cliente</h3>
+            <p class="section-text">
+              El cliente elige servicio, profesional, fecha y hora desde una interfaz sencilla y rápida.
+            </p>
+
+            <div class="mini-window">
+              <div class="window-top">
+                <span></span><span></span><span></span>
+              </div>
+
+              <div class="list">
+                <div class="list-item">
+                  <div>
+                    <strong>Corte tradicional</strong>
+                    <small>30 min · Desde $25.000</small>
+                  </div>
+                  <div class="tag info">Elegir</div>
+                </div>
+
+                <div class="list-item">
+                  <div>
+                    <strong>Barba premium</strong>
+                    <small>25 min · Toalla caliente</small>
+                  </div>
+                  <div class="tag info">Elegir</div>
+                </div>
+
+                <div class="list-item">
+                  <div>
+                    <strong>Combo completo</strong>
+                    <small>55 min · Corte + barba + styling</small>
+                  </div>
+                  <div class="tag ok">Popular</div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="metrics">
+          <div class="metric reveal">
+            <strong>24/7</strong>
+            <span>Reservas disponibles todo el tiempo</span>
+          </div>
+          <div class="metric reveal">
+            <strong>1 panel</strong>
+            <span>Agenda, clientes y operación centralizados</span>
+          </div>
+          <div class="metric reveal">
+            <strong>-menos caos</strong>
+            <span>Menos mensajes dispersos y menos errores manuales</span>
+          </div>
+          <div class="metric reveal">
+            <strong>+orden</strong>
+            <span>Más control sobre horarios, servicios y personal</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="beneficios">
+      <div class="container">
+        <div class="reveal">
+          <h2 class="section-title">Una presencia moderna para tu marca</h2>
+          <p class="section-text">
+            Esta landing comunica una propuesta típica de software para barberías: reservas online,
+            agenda centralizada, automatización y crecimiento comercial con una estética premium y
+            enfocada en conversión.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature reveal">
+            <div class="feature-icon">⚡</div>
+            <h3>Carga rápida</h3>
+            <p>
+              Todo está en un solo archivo, por lo que puedes abrirlo directamente en navegador o
+              desplegarlo como página estática.
+            </p>
+          </article>
+
+          <article class="feature reveal">
+            <div class="feature-icon">🎨</div>
+            <h3>Diseño premium</h3>
+            <p>
+              Usa una estética oscura con acentos vibrantes para transmitir tecnología, orden y
+              confianza comercial.
+            </p>
+          </article>
+
+          <article class="feature reveal">
+            <div class="feature-icon">📱</div>
+            <h3>Responsive</h3>
+            <p>
+              La estructura se adapta a escritorio, tablet y móvil sin depender de frameworks externos.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta" id="contacto">
+      <div class="container">
+        <div class="cta-card reveal">
+          <div>
+            <h2>Haz que tu barbería trabaje con una agenda más inteligente.</h2>
+            <p>
+              Agenda Tu Cita organiza reservas, mejora la atención y convierte el proceso de agendamiento
+              en una experiencia más profesional para tu negocio y tus clientes.
+            </p>
+          </div>
+
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="mailto:contacto@agendatucita.com" class="btn btn-primary">Solicitar demo</a>
+            <a href="tel:+573001234567" class="btn btn-secondary">Hablar por WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-line">
+      <div>© 2026 Agenda Tu Cita. Página demo estática.</div>
+      <div>Reservas · Gestión · Clientes · Crecimiento</div>
+    </div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach(el => observer.observe(el));
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', function(e){
+        const id = this.getAttribute('href');
+        const target = document.querySelector(id);
+        if(target){
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
